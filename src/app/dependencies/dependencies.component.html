@@ -1,0 +1,35 @@
+<div class="container">
+    HELLO
+    <mat-checkbox>TEST</mat-checkbox>
+</div>
+
+<!--
+<mat-card>
+  <div>
+    <mat-progress-bar mode="indeterminate" *ngIf="installing"></mat-progress-bar>
+    <div class="spacer"></div>
+  </div>
+  <mat-card-header>
+    <div mat-card-avatar>
+      <mat-icon *ngIf="installed" class="material-icons default">check_circle</mat-icon>
+      <mat-icon *ngIf="installed" color="warn">cancel</mat-icon>
+    </div>
+    <mat-card-title>{{ name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="installed == 'no'">
+    <p *ngIf="installed">
+      {{ package_name }} is not installed or clould not be located.
+      The easiest option is to install it here.
+    </p>
+    <h3>Manaul Install</h3>
+    <div *ngIf="pre_install != ''" class="brew_command">{{ pre_install }}</div>
+    <div *ngIf="manager != 'homebrew'" class="brew_command">{{ manager }} install {{ package_name }}</div>
+    <div *ngIf="manager == 'homebrew'" class="brew_command">brew install {{ package_name }}</div>
+  </mat-card-content>
+  <mat-card-actions *ngIf="installed == 'no' && installing == 'no'">
+    <button mat-button (click)="install(package_name, pre_install, manager)" color="primary">Install {{ package_name }}</button>
+  </mat-card-actions>
+</mat-card>
+<div style="height: 20px" *ngIf="show == '1'"></div>
+
+-->

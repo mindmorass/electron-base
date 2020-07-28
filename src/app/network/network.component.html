@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="mat-h2">NETWORK</div>
+
+  <mat-tab-group>
+    <!-- Inetface Addresses -->
+    <mat-tab label="Addresses">
+      <div class="container">
+        <mat-card>
+          <mat-card-header>
+            <div mat-card-avatar><mat-icon>public</mat-icon></div>
+            <mat-card-title>Public IP Address</mat-card-title>
+            <mat-card-subtitle>Internet Address</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            {{ publicIpAddress }}
+          </mat-card-content>
+        </mat-card>
+
+        <div class="spacer"></div>
+
+        <div *ngFor="let net of interfaces" class="info">
+          <mat-card>
+            <mat-card-header>
+              <div mat-card-avatar><mat-icon>{{ net.icon }}</mat-icon></div>
+              <mat-card-title>{{ net.title }}</mat-card-title>
+              <mat-card-subtitle>{{ net.subtitle }}</mat-card-subtitle>
+            </mat-card-header>
+  
+            <mat-card-content>
+              {{ net.address }}
+            </mat-card-content>
+          </mat-card>
+
+          <div class="spacer"></div>
+        </div>
+      </div>
+    </mat-tab>
+  
+    <!-- DNS -->
+    <mat-tab label="DNS Resolvers">
+  
+      <div class="container">
+        <div *ngFor="let resolver of resolvers; index as i">
+  
+          <mat-card class="info">
+            <mat-card-header>
+              <div mat-card-avatar><mat-icon>dns</mat-icon></div>
+              <mat-card-title>Resolver {{ i + 1 }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              {{ resolver }}
+            </mat-card-content>
+          </mat-card>
+  
+          <div class="spacer"></div>
+        </div>
+  
+      </div>
+    </mat-tab>
+  
+    <!-- traceroute -->
+    <!--
+    <mat-tab label="Traceroute">
+      <div class="container">
+  
+        <mat-form-field id="fqdn_or_ip" class="destination">
+          <input matInput placeholder="FQDN or IPv4" [(ngModel)]="fqdnOrIp">
+        </mat-form-field>
+  
+        <div>
+          <button mat-raised-button color="primary" (click)="traceroute()">Trace</button>
+        </div>
+        <div class="spacer"></div>
+  
+        <mat-card>
+          <pre>{{ result }}</pre>
+        </mat-card>
+  
+      </div>
+  
+    </mat-tab>
+    -->
+  
+  </mat-tab-group>
+</div>

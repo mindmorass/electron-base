@@ -1,0 +1,54 @@
+<div id="header">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <span class="header-spacer"><img src="assets/header-logo.png" id="logo"></span>
+      <a mat-button routerLink="/settings" matTooltip="Settings">
+        <mat-icon class="nav-menu-icon">settings</mat-icon>
+      </a>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</div>
+
+<div id="app-container">
+  <div id="offline-notice" *ngIf="! online">
+  
+    <!--
+    <video playsinline autoplay muted>
+      <source src="assets/network-offline.mp4" type="video/mp4">
+    </video>
+     -->
+  
+    <div class="network-offline">
+      <mat-card>
+        <i class="material-icons" style="font-size: 40px;">network_check</i>
+       <div>Network is Offline</div>
+     </mat-card>
+   </div>
+  
+  </div>
+  
+  <ng-container *ngIf="online">
+    <mat-sidenav-container color="secondary">
+  
+        <mat-sidenav #sidenav mode="side" opened class="app-sidenav"
+                     role="navigation"
+                     mode="side"
+                     [fixedInViewport]="true"
+                     [fixedTopGap]="65">
+  
+        <mat-nav-list id="nav-menu-list">
+          <a mat-list-item routerLink="/home" class="nav-menu-item" routerLinkActive="active-list-item"><mat-icon class="nav-menu-icon">dashboard</mat-icon>Dashboard</a>
+          <a mat-list-item routerLink="/network" class="nav-menu-item" routerLinkActive="active-list-item"><mat-icon class="nav-menu-icon">network_check</mat-icon>Network</a>
+          <a *ngIf="online" mat-list-item routerLink="/awsclient" class="nav-menu-item" routerLinkActive="active-list-item"><mat-icon class="nav-menu-icon">cloud</mat-icon>AWS Client</a>
+        </mat-nav-list>
+      </mat-sidenav>
+  
+      <mat-sidenav-content role="main">
+        <div id="main-portal">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  
+  </ng-container>
+</div>

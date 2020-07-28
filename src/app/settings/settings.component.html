@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="mat-h2">SETTINGS</div>
+
+  <mat-tab-group>
+    <mat-tab label="Dependencies">
+      <div class="container">
+        <!-- dependencies component -->
+        <app-dependencies></app-dependencies>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Preferences">
+      <div class="container">
+        <div class="debug">
+          <mat-card>
+            <div><mat-checkbox *ngIf="debugging" [(ngModel)]="devToolsStatus" (change)='toggleDevTools()'>Toggle Developer Tools</mat-checkbox></div>
+          </mat-card>
+        </div>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Variables">
+      <div class="container">
+        <mat-card class="flex-width">
+
+          <div class="flex-width">
+            <mat-form-field class="flex-width">
+              <mat-label>Default Region</mat-label>
+              <mat-select [(ngModel)]="defaultRegion" (selectionChange)="saveDefaultRegion($event.value)">
+                <mat-option *ngFor="let region of regions" value="{{ region }}">{{ region }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <!-- all settings variables (except region) -->
+          <div *ngFor="let k of settingVariables; index as i" class="flex-width">
+            <mat-form-field class="form-width-full">
+              <input matInput [(ngModel)]="settingVariables[i].value"
+                     placeholder="{{ settingVariables[i].placeholder }}"
+                     (keyup)="saveVariable(i, $event.target.value)"
+                     [pattern]="settingVariables[i].regex">
+            </mat-form-field>
+          </div>
+
+        </mat-card>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>

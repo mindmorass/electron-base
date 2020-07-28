@@ -1,0 +1,49 @@
+<!-- remove a profile -->
+<div *ngIf="data.action == 'delete'">
+  <h1 mat-dialog-title>Confirm Removal</h1>
+  
+  <div mat-dialog-content>
+    <p>Do you want to delete the <b>{{ data.profile }}</b> profile?</p>
+  </div>
+  
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" cdkFocusInitial>No</button>
+    <button mat-button [mat-dialog-close]="data" color="warn">Yes</button>
+  </div>
+</div> <!-- end remove profile -->
+
+<!-- create a profile -->
+<div *ngIf="data.action == 'add'">
+  <h1 mat-dialog-title>Add Profile</h1>
+  
+  <div mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="New Profile Name" [(ngModel)]="data.profile">
+    </mat-form-field>
+
+    <!-- regions are chicken/egg problem.  to query them from api requires credentials -->
+    <!-- perhaps something external someday but for now, static html entries -->
+    <mat-form-field>
+      <mat-select placeholder="Region" [(ngModel)]="data.region" name="region">
+        <mat-option *ngFor="let region of data.awsRegions" [value]="region">
+          {{ region }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <!-- is this a bug? value seems to require a dash, single words are not working... :/ -->
+      <mat-select placeholder="Output" [(ngModel)]="data.output" name="output">
+        <mat-option *ngFor="let output of data.awsOutputs" [value]="output">
+          {{ output }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div> <!-- end dialog content -->
+
+  <div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" color="primary" cdkFocusInitial>Create</button>
+  </div>
+</div> <!-- end add profile -->

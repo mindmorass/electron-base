@@ -1,0 +1,119 @@
+<div class="container">
+  <div class="mat-h2">AWS CLIENT</div>
+  <mat-form-field>
+    <mat-select placeholder="Profiles"
+                (selectionChange)="changeProfile($event.value)"
+                [(ngModel)]="profile">
+      <mat-option *ngFor="let awsProfile of awsCliConfig | keyvalue" [value]="awsProfile.key">
+        {{ awsProfile.key }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<!-- add profile button -->
+<button mat-icon-button color="primary"
+        matTooltip="Add a new profile">
+  <mat-icon (click)="addProfile()">add_circle</mat-icon>
+</button>
+
+<!-- del profile button -->
+<button *ngIf="profile != 'default'" 
+        mat-icon-button color="warn"
+        matTooltip="Delete this profile">
+  <mat-icon (click)="confirmRemoval()">cancel</mat-icon>
+</button>
+
+<!-- clear credentials -->
+<button mat-icon-button color="accent"
+        matTooltip="Clear Credentials">
+  <mat-icon (click)="deleteProfileCredentials()">clear</mat-icon>
+</button>
+
+  <mat-card>
+    <span>
+      <mat-form-field class="select-spacer">
+        <mat-select placeholder="Region"
+                    (selectionChange)="changeRegion($event.value)"
+                    [(ngModel)]="region">
+          <mat-option *ngFor="let awsRegion of regions" [value]="awsRegion">
+            {{ awsRegion }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="select-spacer">
+        <mat-select placeholder="Output"
+                    (selectionChange)="changeOutput($event.value)"
+                    [(ngModel)]="output">
+          <mat-option *ngFor="let awsOutput of awsCliOutputs" [value]="awsOutput">
+            {{ awsOutput }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </span>
+  </mat-card>
+
+  <div *ngIf="showCliEquivilent">
+    <div class="spacer"></div>
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar><mat-icon color="primary">info</mat-icon></div>
+        <mat-card-title>Command Line Equivalent</mat-card-title>
+      </mat-card-header>
+      <mat-progress-bar mode="determinate" [value]="progressValue"></mat-progress-bar>
+      <div class="cmd-tmp">
+        <div>
+          {{ cliCommand }}
+          <button mat-icon-button [cdkCopyToClipboard]="cliCommand" color="primary" class="clipboard" matTooltip="Copy to Clipboard">
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="spacer"></div>
+  <mat-card *ngIf="! callerIdentity">
+    <mat-spinner *ngIf="loader"></mat-spinner>
+    <div *ngIf="! profileValid && ! loader" id="authenticate">
+      <mat-card-content>
+        The credentials for the profile <i>{{ profile }}</i> are invalid or do not exist.
+      </mat-card-content>
+      <mat-card-actions>
+        <button *ngIf="! loader" mat-raised-button color="primary" (click)="authenticate()">
+          <mat-icon>lock_open</mat-icon>
+          AUTHENTICATE
+        </button>
+      </mat-card-actions>
+    </div>
+  </mat-card>
+
+  <!-- show aws cli command for personal identity -->
+  <div *ngIf="callerIdentity">
+    <div *ngIf="! loader">
+      <div>
+        <div class="mat-h2">CALLER IDENTITY</div>
+        <table mat-table [dataSource]="callerIdentity" class="mat-elevation-z1">
+          <ng-container matColumnDef="key">
+            <th mat-header-cell *matHeaderCellDef>Key</th>
+            <td mat-cell *matCellDef="let element"> {{ element.key }} </td>
+          </ng-container>
+          <ng-container matColumnDef="value">
+            <th mat-header-cell *matHeaderCellDef>Value</th>
+            <td mat-cell *matCellDef="let element">
+              <div class="cmd-output">{{ element.value }}
+                <button mat-icon-button [cdkCopyToClipboard]="element.value" color="primary" class="clipboard" matTooltip="Copy to Clipboard">
+                  <mat-icon>content_copy</mat-icon>
+                </button>
+              </div>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+      <div>{{ credentials }}</div>
+    </div>
+  </div>
+
+</div>
